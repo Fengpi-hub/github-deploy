@@ -1,0 +1,126 @@
+:root {
+  --green: #2e9e5b;
+  --green-dark: #1f7a44;
+  --bg: #f6fbf6;
+  --card: #ffffff;
+  --text: #20341f;
+  --muted: #6b7d68;
+  --radius: 14px;
+  --shadow: 0 6px 20px rgba(46, 158, 91, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a { color: var(--green-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* 顶栏 */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand .logo { font-size: 22px; }
+.brand-name { font-weight: 700; font-size: 18px; color: var(--green-dark); }
+.site-header nav { display: flex; gap: 18px; align-items: center; }
+.site-header nav a { font-weight: 600; color: var(--text); }
+.admin-link {
+  background: var(--green);
+  color: #fff !important;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+.admin-link:hover { background: var(--green-dark); text-decoration: none; }
+
+/* 主体 */
+.site-main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+.page-title { font-size: 26px; margin: 8px 0 20px; }
+
+.tip { color: var(--muted); }
+.tip.error { color: #c0392b; }
+
+/* 卡片网格 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease;
+  color: var(--text);
+}
+.card:hover { transform: translateY(-4px); text-decoration: none; }
+.card-cover { height: 150px; background: #eaf6ec; display: flex; align-items: center; justify-content: center; }
+.card-cover img { width: 100%; height: 100%; object-fit: cover; }
+.card-cover-empty { font-size: 54px; }
+.card-body { padding: 14px 16px; }
+.card-title { font-size: 17px; margin: 0 0 8px; }
+.card-excerpt { color: var(--muted); font-size: 14px; margin: 0 0 10px; }
+.card-date { font-size: 12px; color: #9aa89a; }
+
+/* 详情页 */
+.article { background: var(--card); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+.back { display: inline-block; margin-bottom: 14px; font-size: 14px; }
+.article-title { font-size: 28px; margin: 6px 0 6px; }
+.article-date { color: #9aa89a; font-size: 13px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+.gallery img { width: 100%; border-radius: 10px; object-fit: cover; max-height: 280px; }
+.article-content p { margin: 0 0 12px; white-space: pre-wrap; }
+
+/* 编辑器 */
+.editor { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+.field { display: block; margin-bottom: 18px; }
+.field > span { display: block; font-weight: 600; margin-bottom: 8px; }
+.field input[type="text"],
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d7e6d9;
+  border-radius: 10px;
+  font: inherit;
+  resize: vertical;
+}
+.field input[type="text"]:focus,
+.field textarea:focus { outline: none; border-color: var(--green); }
+
+.preview-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.preview-item { position: relative; }
+.preview-item img { width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 1px solid #eee; }
+.preview-item .remove {
+  position: absolute; top: -8px; right: -8px;
+  width: 22px; height: 22px; border-radius: 50%;
+  border: none; background: #c0392b; color: #fff; cursor: pointer; font-size: 14px;
+}
+
+.actions button {
+  background: var(--green); color: #fff; border: none;
+  padding: 11px 26px; border-radius: 999px; font-size: 15px; font-weight: 600; cursor: pointer;
+}
+.actions button:hover { background: var(--green-dark); }
+.actions button:disabled { opacity: 0.6; cursor: default; }
+
+.msg { margin-top: 14px; font-weight: 600; }
+.msg.ok { color: var(--green-dark); }
+.msg.error { color: #c0392b; }
+
+/* 页脚 */
+.site-footer { text-align: center; color: #9aa89a; font-size: 13px; padding: 24px; }
