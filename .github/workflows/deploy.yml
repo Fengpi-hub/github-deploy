@@ -44,8 +44,10 @@ jobs:
         # - 本地开发/同一域名下由 Spring Boot 托管时留空（用相对路径 /api）
         # - 若把后端部署到别的服务器，改成它的地址，例如 https://api.example.com
         run: npm run build
+        # 后端地址从仓库变量读取：GitHub 仓库 → Settings → Secrets and variables →
+        # Actions → Variables 里新建 VITE_API_BASE，值填后端地址（例如 https://xxx.onrender.com，结尾不要斜杠）
         env:
-          VITE_API_BASE: ''
+          VITE_API_BASE: ${{ vars.VITE_API_BASE }}
 
       # ===== 后端：打包成可执行 JAR（作为产物，方便你部署完整应用）=====
       - name: 5. 安装 Java

@@ -1,0 +1,37 @@
+# Render Blueprint 配置文件
+# 用法：Render 控制台 → New → Blueprint → 选择本仓库，
+# Render 会自动按此文件创建后端 Web 服务 + PostgreSQL 数据库，并把连接信息注入给后端。
+
+services:
+  - type: web
+    name: fruit-blog-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        fromDatabase:
+          name: fruit-blog-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: fruit-blog-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: fruit-blog-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: fruit-blog-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: fruit-blog-db
+          property: password
+    healthCheckPath: /api/articles
+
+databases:
+  - name: fruit-blog-db
+    plan: free   # 免费库。注意：Render 免费数据库约 30 天后可能过期，长期请升级或迁移

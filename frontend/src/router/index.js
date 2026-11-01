@@ -10,7 +10,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // 与 vite.config.js 的 base 保持一致，路由才能正确落在 /github-deploy/ 子路径下
+  history: createWebHistory('/github-deploy/'),
   routes
 })
 

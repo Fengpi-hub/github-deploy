@@ -7,6 +7,9 @@ import vue from '@vitejs/plugin-vue'
 // 2) 部署到 GitHub Pages 这类纯静态托管时，没有后端在同一域名下，
 //    需要把 VITE_API_BASE 设成你后端的可访问地址（见 deploy.yml）。
 export default defineConfig({
+  // GitHub Pages 部署在子路径 /<仓库名>/ 下，必须把 base 设为仓库名，
+  // 否则构建产物里的 /assets/xxx 会被解析到域名根目录导致 404 白屏。
+  base: '/github-deploy/',
   plugins: [vue()],
   server: {
     port: 5173,

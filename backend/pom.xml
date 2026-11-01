@@ -38,6 +38,12 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- 生产环境用 PostgreSQL（本地开发仍用 H2） -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <!-- 参数校验 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
