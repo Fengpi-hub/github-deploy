@@ -7,6 +7,7 @@ services:
     name: fruit-blog-api
     runtime: docker
     dockerfilePath: ./Dockerfile
+    plan: free   # 免费档。注意：免费 Web 服务 15 分钟无请求会休眠，首次访问需等约 30 秒冷启动
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
