@@ -1,12 +1,21 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { getArticle, API_BASE } from '../api/article'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { getArticle, deleteArticle, API_BASE } from '../api/article'
+import { useAuth } from '../auth'
 
 const props = defineProps({ id: String })
+const router = useRouter()
+const { state } = useAuth()
 
 const article = ref(null)
 const loading = ref(true)
 const error = ref('')
+
+// 只有作者本人能看到编辑/删除按钮
+const isOwner = computed(
+  () => article.value && state.username && article.value.author === state.username
+)
 
 function imageList(images) {
   if (!images) return []
@@ -31,6 +40,24 @@ async function load() {
   }
 }
 
+function goEdit() {
+  router.push(`/edit/${props.id}`)
+}
+
+async function goDelete() {
+  if (!confirm('确定要删除这篇文章吗？此操作不可恢复。')) return
+  try {
+    await deleteArticle(props.id)
+    router.push('/')
+  } catch (e) {
+    if (e.response?.status === 403) {
+      alert('只能删除自己的文章。')
+    } else {
+      alert('删除失败，请稍后重试。')
+    }
+  }
+}
+
 onMounted(load)
 // 路由参数变化时重新加载（同一组件切换不同文章）
 watch(() => props.id, load)
@@ -44,7 +71,13 @@ watch(() => props.id, load)
     <article v-else-if="article" class="article">
       <RouterLink to="/" class="back">← 返回首页</RouterLink>
       <h1 class="article-title">{{ article.title }}</h1>
-      <span class="article-date">{{ formatDate(article.createdAt) }}</span>
+      <div class="article-meta">
+        <span class="article-date">{{ formatDate(article.createdAt) }}</span>
+        <span v-if="article.author" class="article-author">✍️ {{ article.author }}</span>
+        <span v-if="article.updatedAt && article.updatedAt !== article.createdAt" class="article-date">
+          （编辑于 {{ formatDate(article.updatedAt) }}）
+        </span>
+      </div>
 
       <div v-if="imageList(article.images).length" class="gallery">
         <img
@@ -58,6 +91,12 @@ watch(() => props.id, load)
       <!-- 正文按换行展示 -->
       <div class="article-content">
         <p v-for="(line, i) in article.content.split('\n')" :key="i">{{ line }}</p>
+      </div>
+
+      <!-- 仅作者可见的操作按钮 -->
+      <div v-if="isOwner" class="article-actions">
+        <button class="btn-edit" @click="goEdit">✏️ 编辑</button>
+        <button class="btn-delete" @click="goDelete">🗑️ 删除</button>
       </div>
     </article>
   </section>

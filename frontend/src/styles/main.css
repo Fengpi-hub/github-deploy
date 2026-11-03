@@ -124,3 +124,42 @@ a:hover { text-decoration: underline; }
 
 /* 页脚 */
 .site-footer { text-align: center; color: #9aa89a; font-size: 13px; padding: 24px; }
+
+/* 顶栏登录态 */
+.user-name { font-size: 14px; color: var(--text); font-weight: 600; }
+.logout-btn {
+  border: 1px solid #d7e6d9; background: #fff; color: var(--green-dark);
+  padding: 5px 12px; border-radius: 999px; cursor: pointer; font-weight: 600;
+}
+.logout-btn:hover { background: #eaf6ec; }
+
+/* 登录 / 注册页 */
+.auth-page { display: flex; justify-content: center; }
+.auth-card { width: 100%; max-width: 460px; }
+.auth-switch { margin-top: 14px; font-size: 14px; color: var(--muted); }
+.checkbox {
+  display: flex; align-items: center; gap: 8px; margin-top: 10px;
+  font-weight: 500; font-size: 14px; color: var(--text);
+}
+.checkbox input { width: 16px; height: 16px; }
+
+/* 详情页作者信息 */
+.article-meta {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  color: #9aa89a; font-size: 13px; margin-bottom: 6px;
+}
+.article-author { color: var(--green-dark); font-weight: 600; }
+
+/* 详情页操作按钮（仅作者可见） */
+.article-actions {
+  display: flex; gap: 12px; margin-top: 24px; padding-top: 18px;
+  border-top: 1px dashed #e0ecdf;
+}
+.article-actions button {
+  border: none; padding: 9px 20px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; cursor: pointer; color: #fff;
+}
+.btn-edit { background: var(--green); }
+.btn-edit:hover { background: var(--green-dark); }
+.btn-delete { background: #c0392b; }
+.btn-delete:hover { background: #a93226; }

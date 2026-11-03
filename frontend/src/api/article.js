@@ -1,13 +1,7 @@
-import axios from 'axios'
+import http, { API_BASE } from './http'
 
-// 后端地址：本地开发经 vite proxy 走相对路径；
-// 部署到 GitHub Pages 时通过 VITE_API_BASE 指向真实后端。
-const BASE = import.meta.env.VITE_API_BASE || ''
-
-// 给前端组件用：把后端返回的相对地址（如 /uploads/xxx）拼成完整地址
-export const API_BASE = BASE
-
-const http = axios.create({ baseURL: BASE })
+// 把后端相对地址拼成完整地址，供组件使用
+export { API_BASE }
 
 // 获取文章列表
 export function listArticles() {
@@ -31,4 +25,25 @@ export function createArticle(article, images) {
   return http.post('/api/articles', form, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
+}
+
+// 更新文章（支持替换/清除图片）
+export function updateArticle(id, article, images, clearImages) {
+  const form = new FormData()
+  form.append('title', article.title)
+  form.append('content', article.content)
+  if (images && images.length) {
+    images.forEach((f) => form.append('images', f))
+  }
+  if (clearImages) {
+    form.append('clearImages', 'true')
+  }
+  return http.put(`/api/articles/${id}`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+}
+
+// 删除文章
+export function deleteArticle(id) {
+  return http.delete(`/api/articles/${id}`)
 }
